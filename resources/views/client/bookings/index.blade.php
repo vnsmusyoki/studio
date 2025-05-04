@@ -50,7 +50,7 @@
                             </td>
                             <td class="text-center">
                                 <div class="d-flex align-items-center gap-2 justify-content-center">
-
+                                    @if ($booking->payment_status != 'paid')
                                     <a href="{{ route('admin.providers.edit', $booking->id) }}" class="btn btn-primary btn-sm">
                                         Edit
                                     </a>
@@ -61,6 +61,7 @@
                                             Delete
                                         </button>
                                     </form>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
