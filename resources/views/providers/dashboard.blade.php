@@ -9,8 +9,8 @@
                 <div class="card-body p-20">
                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
                         <div>
-                            <p class="fw-medium text-primary-light mb-1">Total </p>
-                            <h6 class="mb-0">e4r4r</h6>
+                            <p class="fw-medium text-primary-light mb-1">Total Bookings</p>
+                            <h6 class="mb-0">{{ $bookings }}</h6>
                         </div>
                         <div class="w-50-px h-50-px bg-cyan rounded-circle d-flex justify-content-center align-items-center">
                             <iconify-icon icon="gridicons:multiple-users" class="text-white text-2xl mb-0"></iconify-icon>
@@ -26,8 +26,8 @@
                 <div class="card-body p-20">
                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
                         <div>
-                            <p class="fw-medium text-primary-light mb-1">Total Subscription</p>
-                            <h6 class="mb-0">{{ __('diejde') }}</h6>
+                            <p class="fw-medium text-primary-light mb-1">Total Services</p>
+                            <h6 class="mb-0">{{ $totalservices }}</h6>
                         </div>
                         <div
                             class="w-50-px h-50-px bg-purple rounded-circle d-flex justify-content-center align-items-center">
@@ -44,8 +44,8 @@
                 <div class="card-body p-20">
                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
                         <div>
-                            <p class="fw-medium text-primary-light mb-1">Total Free Users</p>
-                            <h6 class="mb-0">{{ __('dekmde')}}</h6>
+                            <p class="fw-medium text-primary-light mb-1">This Week</p>
+                            <h6 class="mb-0">{{ $thisweek}}</h6>
                         </div>
                         <div
                             class="w-50-px h-50-px bg-info rounded-circle d-flex justify-content-center align-items-center">
@@ -62,8 +62,8 @@
                 <div class="card-body p-20">
                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
                         <div>
-                            <p class="fw-medium text-primary-light mb-1">Total Income</p>
-                            <h6 class="mb-0">${{ ('demde') }}</h6>
+                            <p class="fw-medium text-primary-light mb-1">This Month</p>
+                            <h6 class="mb-0">{{ $thismonth }}</h6>
                         </div>
                         <div
                             class="w-50-px h-50-px bg-success-main rounded-circle d-flex justify-content-center align-items-center">
@@ -80,8 +80,8 @@
                 <div class="card-body p-20">
                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
                         <div>
-                            <p class="fw-medium text-primary-light mb-1">Total Expense</p>
-                            <h6 class="mb-0">${{ ('dende') }}</h6>
+                            <p class="fw-medium text-primary-light mb-1">Upcoming Events</p>
+                            <h6 class="mb-0">{{ $upcomingevents }}</h6>
                         </div>
                         <div class="w-50-px h-50-px bg-red rounded-circle d-flex justify-content-center align-items-center">
                             <iconify-icon icon="fa6-solid:file-invoice-dollar"
@@ -104,6 +104,6 @@
             <canvas id="serviceChart"></canvas>
         </div>
     </div>
- 
+
 
 @endsection

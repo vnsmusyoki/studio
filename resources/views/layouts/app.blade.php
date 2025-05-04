@@ -58,7 +58,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{ route('admin.payments')}}">
                             <iconify-icon icon="bi:chat-dots" class="menu-icon"></iconify-icon>
                             <span>Payments</span>
                         </a>

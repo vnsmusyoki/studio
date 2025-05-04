@@ -15,8 +15,12 @@ class ServiceProviderController extends Controller
 {
     public function dashboard()
     {
-
-        return view('providers.dashboard');
+        $bookings = DB::table('bookings')->where('bookings.provider_id', auth()->user()->id)->count();
+        $thisweek = DB::table('bookings')->where('bookings.provider_id', auth()->user()->id)->whereBetween('bookings.created_at', [now()->subDays(7), now()])->count();
+        $thismonth = DB::table('bookings')->where('bookings.provider_id', auth()->user()->id)->whereBetween('bookings.created_at', [now()->subMonth(), now()])->count();
+        $upcomingevents = DB::table('bookings')->where('bookings.provider_id', auth()->user()->id)->where('bookings.status', 'pending')->count();
+        $totalservices = DB::table('studio_services')->where('studio_services.provider_id', auth()->user()->id)->count();
+        return view('providers.dashboard',compact('bookings', 'thisweek', 'thismonth','upcomingevents','totalservices'));
     }
 
     public function bookings()

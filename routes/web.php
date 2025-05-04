@@ -33,6 +33,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/service-providers', [AdminController::class, 'serviceProviders'])->name('admin.providers');
+    Route::get('/payments', [AdminController::class, 'getPayments'])->name('admin.payments');
     Route::get('/service-providers/create', [AdminController::class, 'createServiceProvider'])->name('admin.providers.create');
     Route::post('/service-providers/store', [AdminController::class, 'storeServiceProvider'])->name('admin.providers.store');
     Route::get('/service-providers/confirm/{slug}', [AdminController::class, 'confirmServiceProvider'])->name('admin.providers.confirm');

@@ -32,16 +32,16 @@ class AdminController extends Controller
             ->groupBy('service_category_id')
             ->pluck('total', 'service_category_id');
 
-            $categories = ServiceCategory::whereIn('id', $serviceData->keys())->pluck('name', 'id');
+        $categories = ServiceCategory::whereIn('id', $serviceData->keys())->pluck('name', 'id');
 
-            
-            $labels = [];
-            $data = [];
-        
-            foreach ($serviceData as $categoryId => $total) {
-                $labels[] = $categories[$categoryId] ?? 'Unknown';
-                $data[] = $total;
-            }
+
+        $labels = [];
+        $data = [];
+
+        foreach ($serviceData as $categoryId => $total) {
+            $labels[] = $categories[$categoryId] ?? 'Unknown';
+            $data[] = $total;
+        }
 
         return view('admin.dashboard', compact(
             'totalUsers',
@@ -58,6 +58,11 @@ class AdminController extends Controller
     {
         $providers = User::role('provider')->get();
         return view('admin.service-providers.index', compact('providers'));
+    }
+    public function getPayments()
+    {
+        $payments = Payment::with('client', 'booking')->get();
+        return view('admin.payments.index', compact('payments'));
     }
 
     public function createServiceProvider()
