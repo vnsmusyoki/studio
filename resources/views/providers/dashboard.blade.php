@@ -96,14 +96,14 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <div class="card mt-4" >
+    {{-- <div class="card mt-4" >
         <div class="card-header">
             <h5 class="card-title">Service Providers per Category</h5>
         </div>
         <div class="card-body">
             <canvas id="serviceChart"></canvas>
         </div>
-    </div>
+    </div> --}}
 
 
 @endsection

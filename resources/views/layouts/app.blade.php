@@ -63,14 +63,9 @@
                             <span>Payments</span>
                         </a>
                     </li>
+
                     <li>
-                        <a href="#">
-                            <iconify-icon icon="bi:chat-dots" class="menu-icon"></iconify-icon>
-                            <span>Payments</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
+                        <a href="{{ route('admin.complains')}}">
                             <iconify-icon icon="bi:chat-dots" class="menu-icon"></iconify-icon>
                             <span>Complains</span>
                         </a>
@@ -113,6 +108,12 @@
                         <a href="{{ route('client.bookings')}}">
                             <iconify-icon icon="material-symbols:map-outline" class="menu-icon"></iconify-icon>
                             <span>Bookings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('client.complains')}}">
+                            <iconify-icon icon="material-symbols:map-outline" class="menu-icon"></iconify-icon>
+                            <span>Complains</span>
                         </a>
                     </li>
                 @endrole

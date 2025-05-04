@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Complain;
 use App\Models\Payment;
 use App\Models\ServiceCategory;
 use App\Models\User;
@@ -65,6 +66,10 @@ class AdminController extends Controller
         return view('admin.payments.index', compact('payments'));
     }
 
+    public function getComplains(){
+        $complains = Complain::with('client','booking','provider')->get();
+        return view('admin.complains.index', compact('complains'));
+    }
     public function createServiceProvider()
     {
         $serviceCategories = ServiceCategory::all();

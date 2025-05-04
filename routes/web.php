@@ -34,6 +34,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/service-providers', [AdminController::class, 'serviceProviders'])->name('admin.providers');
     Route::get('/payments', [AdminController::class, 'getPayments'])->name('admin.payments');
+    Route::get('/complains', [AdminController::class, 'getComplains'])->name('admin.complains');
     Route::get('/service-providers/create', [AdminController::class, 'createServiceProvider'])->name('admin.providers.create');
     Route::post('/service-providers/store', [AdminController::class, 'storeServiceProvider'])->name('admin.providers.store');
     Route::get('/service-providers/confirm/{slug}', [AdminController::class, 'confirmServiceProvider'])->name('admin.providers.confirm');
@@ -62,4 +63,7 @@ Route::prefix('client')->middleware(['auth', 'role:client'])->group(function () 
     Route::get('/bookings', [ClientController::class, 'bookings'])->name('client.bookings');
     Route::get('/bookings/create', [ClientController::class, 'createBookings'])->name('client.bookings.create');
     Route::post('/bookings/store', [ClientController::class, 'storeBookings'])->name('client.bookings.store');
+    Route::get('/complains', [ClientController::class, 'allComplains'])->name('client.complains');
+    Route::get('/complains/create', [ClientController::class, 'createComplains'])->name('client.complains.create');
+    Route::post('/complains/store', [ClientController::class, 'storeComplains'])->name('client.complains.store');
 });
