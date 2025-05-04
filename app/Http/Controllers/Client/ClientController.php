@@ -18,7 +18,24 @@ class ClientController extends Controller
 {
     public function dashboard()
     {
-        return view('client.dashboard');
+        $user = Auth::user();
+        $subscription = $user->subscription; // hasOne
+        $complaints =Complain::where('client_id', $user->id)->get();    // hasMany
+
+
+        $complaintChartData = $complaints->groupBy('category')
+            ->map(fn($group) => $group->count())
+            ->toArray();
+
+        return view('client.dashboard', [
+            'client' => $user,
+            'pendingCount' => $complaints->where('status', 'pending')->count(),
+            'resolvedCount' => $complaints->where('status', 'resolved')->count(),
+            'totalComplaints' => $complaints->count(),
+            'notifications' => 0,
+            'complaintChartData' => $complaintChartData,
+        ]);
+
     }
 
     public function bookings()
