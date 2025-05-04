@@ -96,6 +96,12 @@
                             <span>Services</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('provider.complains')}}">
+                            <iconify-icon icon="material-symbols:map-outline" class="menu-icon"></iconify-icon>
+                            <span>Complains</span>
+                        </a>
+                    </li>
                 @endrole
                 @role('client')
                     <li>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Complain;
 use App\Models\Payment;
 use App\Models\ServiceCategory;
 use App\Models\StudioService;
@@ -20,13 +21,13 @@ class ServiceProviderController extends Controller
         $thismonth = DB::table('bookings')->where('bookings.provider_id', auth()->user()->id)->whereBetween('bookings.created_at', [now()->subMonth(), now()])->count();
         $upcomingevents = DB::table('bookings')->where('bookings.provider_id', auth()->user()->id)->where('bookings.status', 'pending')->count();
         $totalservices = DB::table('studio_services')->where('studio_services.provider_id', auth()->user()->id)->count();
-        return view('providers.dashboard',compact('bookings', 'thisweek', 'thismonth','upcomingevents','totalservices'));
+        return view('providers.dashboard', compact('bookings', 'thisweek', 'thismonth', 'upcomingevents', 'totalservices'));
     }
 
     public function bookings()
     {
 
-        $bookings = DB::table('bookings')->join('users', 'users.id', '=', 'bookings.client_id')->join('studio_services', 'studio_services.id', '=', 'bookings.service_id')->join('payments', 'payments.booking_id', '=', 'bookings.id')->where('bookings.provider_id', auth()->user()->id)->select('bookings.*', 'users.name as client_name', 'studio_services.min_price', 'studio_services.max_price','studio_services.title as service_title', 'payments.transaction_id as transaction_code', 'payments.payment_status as payment_status')->get();
+        $bookings = DB::table('bookings')->join('users', 'users.id', '=', 'bookings.client_id')->join('studio_services', 'studio_services.id', '=', 'bookings.service_id')->join('payments', 'payments.booking_id', '=', 'bookings.id')->where('bookings.provider_id', auth()->user()->id)->select('bookings.*', 'users.name as client_name', 'studio_services.min_price', 'studio_services.max_price', 'studio_services.title as service_title', 'payments.transaction_id as transaction_code', 'payments.payment_status as payment_status')->get();
         return view('providers.bookings.index', compact('bookings'));
     }
 
@@ -45,6 +46,34 @@ class ServiceProviderController extends Controller
         return view('providers.services.index', compact('services'));
     }
 
+    public function getComplains()
+    {
+        $complains = Complain::with('client', 'booking', 'provider')->where('provider_id', auth()->user()->id)->get();
+        return view('providers.complains.index', compact('complains'));
+    }
+
+    public function getComplainDetails($id)
+    {
+        $complain = Complain::with(['client', 'provider', 'booking.servicebooking'])->findOrFail($id);
+        return view('providers.complains.edit', compact('complain'));
+    }
+    public function updateComplainDetails(Request $request, $id)
+    {
+        $request->validate([
+            'response' => 'required|string',
+            'status' => 'required|in:pending,solved',
+        ]);
+
+        $complain = Complain::findOrFail($id);
+        if (!$complain) {
+            return redirect()->route('provider.complains')->with('error', 'Complain not found.');
+        }
+        $complain->response = $request->response;
+        $complain->status = 'solved' ?? $request->status;
+        $complain->save();
+
+        return redirect()->route('provider.complains')->with('success', 'Response updated successfully.');
+    }
     public function createService()
     {
         $serviceCategories = ServiceCategory::all();
@@ -136,24 +165,25 @@ class ServiceProviderController extends Controller
         return redirect()->route('provider.services')->with('success', 'Service deleted successfully.');
     }
 
-    public function confirmBooking($slug){
+    public function confirmBooking($slug)
+    {
         $booking = Booking::with('payment')->where('id', $slug)->first();
 
-        if(!$booking){
+        if (!$booking) {
             return redirect()->back()->with('error', 'Unable to confirm this booking');
         }
 
-        if($booking->status == "confirmed"){
+        if ($booking->status == "confirmed") {
             return redirect()->back()->with('error', 'Booking is already confirmed');
         }
 
         $booking->update([
-            'status'=>'confirmed',
-            'payment_status'=>'paid'
+            'status' => 'confirmed',
+            'payment_status' => 'paid'
         ]);
         $payment = Payment::where('booking_id', $booking->id)->first();
         $payment->update([
-            'payment_status'=>'completed'
+            'payment_status' => 'completed'
         ]);
 
         return redirect()->back()->with('success', 'Payment Approved successfully');

@@ -52,6 +52,9 @@ Route::prefix('provider')->middleware(['auth', 'role:provider'])->group(function
     Route::get('/bookings/create', [ServiceProviderController::class, 'createBooking'])->name('providers.bookings.create');
     Route::post('/bookings/confirm/{slug}', [ServiceProviderController::class, 'confirmBooking'])->name('providers.bookings.confirm');
     Route::get('/services', [ServiceProviderController::class, 'services'])->name('provider.services');
+    Route::get('/complains', [ServiceProviderController::class, 'getComplains'])->name('provider.complains');
+    Route::get('/complains/{id}', [ServiceProviderController::class, 'getComplainDetails'])->name('providers.complains.edit');
+    Route::patch('/complains/update/{id}', [ServiceProviderController::class, 'updateComplainDetails'])->name('providers.complains.update');
     Route::get('/services/create', [ServiceProviderController::class, 'createService'])->name('providers.services.create');
     Route::post('/services/store', [ServiceProviderController::class, 'storeService'])->name('providers.services.store');
     Route::get('/services/edit/{slug}', [ServiceProviderController::class, 'editService'])->name('providers.services.edit');
